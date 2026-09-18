@@ -33,6 +33,13 @@
   border: 2px solid var(--color-primary-soft);
 }
 
+.home__tagline {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-text);
+  font-style: italic;
+}
+
 .home__hero-widget {
   display: none;
 }

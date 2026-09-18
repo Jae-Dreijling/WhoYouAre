@@ -14,6 +14,13 @@
   margin-bottom: var(--space-1);
 }
 
+.profile__tagline {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--color-text);
+}
+
 .profile__placeholder {
   border: 2px dashed var(--color-border);
   display: flex;

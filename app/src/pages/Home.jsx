@@ -2,11 +2,12 @@ import Card from '../components/Card';
 import WidgetImageSlot from '../components/WidgetImageSlot';
 import PersonaSwitcher from '../components/PersonaSwitcher';
 import Button from '../components/Button';
-import { usePersonaTheme } from '../theme/ThemeContext';
+import { usePersona } from '../state/PersonaContext';
 import './Home.css';
 
 export default function Home() {
-  const { activeTheme } = usePersonaTheme();
+  const { activeCharacter } = usePersona();
+  const { name, tagline, bio } = activeCharacter.identity;
 
   return (
     <div className="home">
@@ -21,11 +22,9 @@ export default function Home() {
         <WidgetImageSlot size="md" className="home__hero-widget" />
         <Card className="home__hero-card">
           <p className="home__eyebrow">Current persona</p>
-          <h2>{activeTheme.name}</h2>
-          <p>
-            This card reskins to match whichever persona is active — full character
-            profiles arrive in Phase 1.
-          </p>
+          <h2>{name}</h2>
+          <p className="home__tagline">{tagline}</p>
+          {bio && <p>{bio}</p>}
           <Button variant="primary">See suggestions</Button>
         </Card>
         <WidgetImageSlot size="md" className="home__hero-widget" />

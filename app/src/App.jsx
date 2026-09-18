@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './theme/ThemeContext';
+import { PersonaProvider } from './state/PersonaContext';
 import NavBar from './components/NavBar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
@@ -8,7 +8,7 @@ import './App.css';
 
 export default function App() {
   return (
-    <ThemeProvider>
+    <PersonaProvider>
       <div className="app-shell">
         <main className="app-content">
           <Routes>
@@ -19,6 +19,6 @@ export default function App() {
         </main>
         <NavBar />
       </div>
-    </ThemeProvider>
+    </PersonaProvider>
   );
 }

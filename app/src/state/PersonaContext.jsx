@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { createStarterCharacters, createYouCharacter } from '../data/characters';
 import {
   loadCharacters,
@@ -37,7 +37,7 @@ export function PersonaProvider({ children }) {
     root.style.setProperty('--color-accent', activeCharacter.visual.accentColor);
   }, [activeCharacter]);
 
-  function downloadBackup() {
+  const downloadBackup = useCallback(() => {
     const payload = JSON.stringify({ characters, activePersonaId }, null, 2);
     const blob = new Blob([payload], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -46,9 +46,9 @@ export function PersonaProvider({ children }) {
     link.download = 'whoyouare-backup.json';
     link.click();
     URL.revokeObjectURL(url);
-  }
+  }, [characters, activePersonaId]);
 
-  async function importFromFile(file) {
+  const importFromFile = useCallback(async (file) => {
     try {
       const text = await file.text();
       const parsed = JSON.parse(text);
@@ -71,7 +71,7 @@ export function PersonaProvider({ children }) {
     } catch {
       return { success: false, error: "That file couldn't be read as a WhoYouAre backup." };
     }
-  }
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -82,7 +82,7 @@ export function PersonaProvider({ children }) {
       downloadBackup,
       importFromFile,
     }),
-    [characters, activeCharacter, activePersonaId]
+    [characters, activeCharacter, activePersonaId, downloadBackup, importFromFile]
   );
 
   return <PersonaContext.Provider value={value}>{children}</PersonaContext.Provider>;

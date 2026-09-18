@@ -1,22 +1,30 @@
 import Card from '../components/Card';
-import { usePersonaTheme } from '../theme/ThemeContext';
+import { usePersona } from '../state/PersonaContext';
 import './Profile.css';
 
 export default function Profile() {
-  const { activeTheme } = usePersonaTheme();
+  const { activeCharacter } = usePersona();
+  const { name, tagline, bio } = activeCharacter.identity;
 
   return (
     <div className="profile">
       <header>
         <p className="profile__eyebrow">Persona profile</p>
-        <h1>{activeTheme.name}</h1>
+        <h1>{name}</h1>
+        <p className="profile__tagline">{tagline}</p>
       </header>
 
+      {bio && (
+        <Card>
+          <p>{bio}</p>
+        </Card>
+      )}
+
       <Card className="profile__placeholder">
-        <h3>Full profile coming in Phase 2</h3>
+        <h3>Full profile view coming in Phase 2</h3>
         <p>
-          Identity, values, food &amp; health, hobbies, social style, and do&apos;s/don&apos;ts
-          will all show up here once real character data lands.
+          Values, food &amp; health, hobbies, social style, and do&apos;s/don&apos;ts already
+          exist in this character&apos;s data — they&apos;ll get a proper display here next.
         </p>
       </Card>
     </div>
