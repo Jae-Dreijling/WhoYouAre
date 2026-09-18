@@ -1,0 +1,39 @@
+.persona-switcher {
+  display: flex;
+  gap: var(--space-3);
+  overflow-x: auto;
+  padding-bottom: var(--space-1);
+}
+
+.persona-switcher__item {
+  flex-shrink: 0;
+  width: 76px;
+  height: 76px;
+  border-radius: var(--radius-pill);
+  border: 3px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.persona-switcher__item:hover {
+  transform: translateY(-2px);
+}
+
+.persona-switcher__item.is-active {
+  border-color: var(--color-text);
+  transform: scale(1.06);
+}
+
+.persona-switcher__label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  padding: 0 var(--space-1);
+}

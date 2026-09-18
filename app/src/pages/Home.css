@@ -1,0 +1,50 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.home__eyebrow {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.home__header h1 {
+  font-size: 1.75rem;
+}
+
+.home__hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.home__hero-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+  border: 2px solid var(--color-primary-soft);
+}
+
+.home__hero-widget {
+  display: none;
+}
+
+.home__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+  .home__hero-widget {
+    display: flex;
+  }
+}
