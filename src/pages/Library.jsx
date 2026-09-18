@@ -1,18 +1,9 @@
 import { useRef, useState } from 'react';
 import Card from '../components/Card';
 import Button from '../components/Button';
+import Avatar from '../components/Avatar';
 import { usePersona } from '../state/PersonaContext';
 import './Library.css';
-
-function initials(name) {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join('')
-    .toUpperCase();
-}
 
 export default function Library() {
   const { characters, activePersonaId, setActivePersonaId, downloadBackup, importFromFile } =
@@ -39,7 +30,7 @@ export default function Library() {
       <div className="library__grid">
         {characters.map((character) => {
           const isActive = character.id === activePersonaId;
-          const { primaryColor, accentColor } = character.visual;
+          const { primaryColor, accentColor, profilePictureId } = character.visual;
           return (
             <Card
               key={character.id}
@@ -47,12 +38,13 @@ export default function Library() {
               className={`library__card ${isActive ? 'is-active' : ''}`}
               onClick={() => setActivePersonaId(character.id)}
             >
-              <span
-                className="library__avatar"
-                style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
-              >
-                {initials(character.identity.name) || '?'}
-              </span>
+              <Avatar
+                imageId={profilePictureId}
+                name={character.identity.name}
+                primaryColor={primaryColor}
+                accentColor={accentColor}
+                size={52}
+              />
               <h3>{character.identity.name}</h3>
               <p>{character.identity.tagline}</p>
             </Card>

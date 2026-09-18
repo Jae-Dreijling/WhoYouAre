@@ -73,6 +73,12 @@ export function PersonaProvider({ children }) {
     }
   }, []);
 
+  const updateCharacterVisual = useCallback((characterId, patch) => {
+    setCharacters((prev) =>
+      prev.map((c) => (c.id === characterId ? { ...c, visual: { ...c.visual, ...patch } } : c))
+    );
+  }, []);
+
   const value = useMemo(
     () => ({
       characters,
@@ -81,8 +87,16 @@ export function PersonaProvider({ children }) {
       setActivePersonaId,
       downloadBackup,
       importFromFile,
+      updateCharacterVisual,
     }),
-    [characters, activeCharacter, activePersonaId, downloadBackup, importFromFile]
+    [
+      characters,
+      activeCharacter,
+      activePersonaId,
+      downloadBackup,
+      importFromFile,
+      updateCharacterVisual,
+    ]
   );
 
   return <PersonaContext.Provider value={value}>{children}</PersonaContext.Provider>;

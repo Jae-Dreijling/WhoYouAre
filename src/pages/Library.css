@@ -46,20 +46,6 @@
   font-size: 0.85rem;
 }
 
-.library__avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-pill);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: white;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-  box-shadow: var(--shadow-sm);
-}
-
 .library__backup {
   display: flex;
   flex-direction: column;

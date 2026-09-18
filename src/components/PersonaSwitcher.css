@@ -18,19 +18,7 @@
 }
 
 .persona-switcher__avatar {
-  width: 60px;
-  height: 60px;
-  border-radius: var(--radius-pill);
   border: 3px solid transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: white;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-  box-shadow: var(--shadow-sm);
   transition: transform 0.15s ease, border-color 0.15s ease;
 }
 

@@ -2,12 +2,14 @@ import Card from '../components/Card';
 import WidgetImageSlot from '../components/WidgetImageSlot';
 import PersonaSwitcher from '../components/PersonaSwitcher';
 import Button from '../components/Button';
+import Avatar from '../components/Avatar';
 import { usePersona } from '../state/PersonaContext';
 import './Home.css';
 
 export default function Home() {
   const { activeCharacter } = usePersona();
   const { name, tagline, bio } = activeCharacter.identity;
+  const { profilePictureId, widgetImageIds } = activeCharacter.visual;
 
   return (
     <div className="home">
@@ -19,18 +21,19 @@ export default function Home() {
       <PersonaSwitcher />
 
       <section className="home__hero">
-        <WidgetImageSlot size="md" className="home__hero-widget" />
+        <WidgetImageSlot size="md" imageId={widgetImageIds[0]} className="home__hero-widget" />
         <Card className="home__hero-card">
+          <Avatar imageId={profilePictureId} name={name} size={72} />
           <p className="home__eyebrow">Current persona</p>
           <h2>{name}</h2>
           <p className="home__tagline">{tagline}</p>
           {bio && <p>{bio}</p>}
           <Button variant="primary">See suggestions</Button>
         </Card>
-        <WidgetImageSlot size="md" className="home__hero-widget" />
+        <WidgetImageSlot size="md" imageId={widgetImageIds[1]} className="home__hero-widget" />
       </section>
 
-      <WidgetImageSlot size="lg" />
+      <WidgetImageSlot size="lg" imageId={widgetImageIds[2]} />
 
       <section className="home__row">
         <Card>
