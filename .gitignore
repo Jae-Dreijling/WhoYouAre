@@ -33,3 +33,4 @@ dev-dist
 # Windows
 Thumbs.db
 desktop.ini
+.NOTES/
