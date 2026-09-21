@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Avatar from '../components/Avatar';
@@ -8,6 +9,7 @@ import './Library.css';
 export default function Library() {
   const { characters, activePersonaId, setActivePersonaId, downloadBackup, importFromFile } =
     usePersona();
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [importMessage, setImportMessage] = useState(null);
 
@@ -24,7 +26,7 @@ export default function Library() {
       <header>
         <p className="library__eyebrow">Browse</p>
         <h1>Character library</h1>
-        <p>Creating and deleting your own characters arrives in Phase 3.</p>
+        <p>Tap a persona to switch, or create a new one of your own.</p>
       </header>
 
       <div className="library__grid">
@@ -50,6 +52,14 @@ export default function Library() {
             </Card>
           );
         })}
+        <Card
+          as="button"
+          className="library__card library__card--add"
+          onClick={() => navigate('/create')}
+        >
+          <span className="library__add-icon">+</span>
+          <h3>New persona</h3>
+        </Card>
       </div>
 
       <Card className="library__backup">

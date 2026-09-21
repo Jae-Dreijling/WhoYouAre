@@ -6,6 +6,7 @@ import {
   loadActivePersonaId,
   saveActivePersonaId,
 } from '../store/characterStore';
+import { deleteImage } from '../store/imageStore';
 
 const PersonaContext = createContext(null);
 
@@ -73,11 +74,47 @@ export function PersonaProvider({ children }) {
     }
   }, []);
 
-  const updateCharacterVisual = useCallback((characterId, patch) => {
+  // Shallow-merges each provided top-level slice (identity, visual, values, ...)
+  // into the existing character, so callers only pass the fields they touched.
+  const updateCharacter = useCallback((characterId, patch) => {
     setCharacters((prev) =>
-      prev.map((c) => (c.id === characterId ? { ...c, visual: { ...c.visual, ...patch } } : c))
+      prev.map((c) => {
+        if (c.id !== characterId) return c;
+        const next = { ...c };
+        for (const key of Object.keys(patch)) {
+          const value = patch[key];
+          const isMergeableObject =
+            value && typeof value === 'object' && !Array.isArray(value);
+          next[key] = isMergeableObject ? { ...c[key], ...value } : value;
+        }
+        return next;
+      })
     );
   }, []);
+
+  const addCharacter = useCallback((character) => {
+    setCharacters((prev) => [...prev, character]);
+    setActivePersonaId(character.id);
+  }, []);
+
+  const deleteCharacter = useCallback(
+    async (characterId) => {
+      const target = characters.find((c) => c.id === characterId);
+      if (!target) return { success: false, error: 'Persona not found.' };
+      if (target.isProtected) return { success: false, error: "This persona can't be deleted." };
+      if (characters.length <= 1) {
+        return { success: false, error: 'At least one persona has to exist.' };
+      }
+
+      if (target.visual.profilePictureId) await deleteImage(target.visual.profilePictureId);
+      for (const imageId of target.visual.widgetImageIds) await deleteImage(imageId);
+
+      setCharacters((prev) => prev.filter((c) => c.id !== characterId));
+      setActivePersonaId((prev) => (prev === characterId ? 'you' : prev));
+      return { success: true };
+    },
+    [characters]
+  );
 
   const value = useMemo(
     () => ({
@@ -87,7 +124,9 @@ export function PersonaProvider({ children }) {
       setActivePersonaId,
       downloadBackup,
       importFromFile,
-      updateCharacterVisual,
+      updateCharacter,
+      addCharacter,
+      deleteCharacter,
     }),
     [
       characters,
@@ -95,7 +134,9 @@ export function PersonaProvider({ children }) {
       activePersonaId,
       downloadBackup,
       importFromFile,
-      updateCharacterVisual,
+      updateCharacter,
+      addCharacter,
+      deleteCharacter,
     ]
   );
 

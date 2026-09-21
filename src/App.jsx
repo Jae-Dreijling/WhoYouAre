@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Library from './pages/Library';
 import Settings from './pages/Settings';
+import PersonaForm from './pages/PersonaForm';
 import './App.css';
 
 export default function App() {
@@ -17,6 +18,8 @@ export default function App() {
             <Route path="/library" element={<Library />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/create" element={<PersonaForm />} />
+            <Route path="/edit/:id" element={<PersonaForm />} />
           </Routes>
         </main>
         <NavBar />

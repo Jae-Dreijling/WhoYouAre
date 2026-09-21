@@ -50,7 +50,7 @@ function WidgetThumb({ imageId, onDelete }) {
 }
 
 export default function Profile() {
-  const { activeCharacter, updateCharacterVisual } = usePersona();
+  const { activeCharacter, updateCharacter } = usePersona();
   const { name, tagline, bio } = activeCharacter.identity;
   const { primaryColor, accentColor, profilePictureId, widgetImageIds } = activeCharacter.visual;
   const { mottos, selfTalk } = activeCharacter.values;
@@ -71,7 +71,7 @@ export default function Profile() {
       const blob = await resizeImage(file, { maxSize: 480, square: true });
       const newId = await putImage(blob);
       const oldId = profilePictureId;
-      updateCharacterVisual(activeCharacter.id, { profilePictureId: newId });
+      updateCharacter(activeCharacter.id, { visual: { profilePictureId: newId } });
       if (oldId) await deleteImage(oldId);
     } finally {
       setBusy(false);
@@ -89,8 +89,8 @@ export default function Profile() {
         const blob = await resizeImage(file, { maxSize: 640 });
         newIds.push(await putImage(blob));
       }
-      updateCharacterVisual(activeCharacter.id, {
-        widgetImageIds: [...widgetImageIds, ...newIds],
+      updateCharacter(activeCharacter.id, {
+        visual: { widgetImageIds: [...widgetImageIds, ...newIds] },
       });
     } finally {
       setBusy(false);
@@ -99,8 +99,8 @@ export default function Profile() {
 
   async function handleRemoveWidgetImage(imageId) {
     await deleteImage(imageId);
-    updateCharacterVisual(activeCharacter.id, {
-      widgetImageIds: widgetImageIds.filter((id) => id !== imageId),
+    updateCharacter(activeCharacter.id, {
+      visual: { widgetImageIds: widgetImageIds.filter((id) => id !== imageId) },
     });
   }
 
@@ -112,9 +112,14 @@ export default function Profile() {
           <h1>{name}</h1>
           <p className="profile__tagline">{tagline}</p>
         </div>
-        <Link to="/settings" className="profile__settings-link" aria-label="Settings">
-          ⚙️
-        </Link>
+        <div className="profile__header-actions">
+          <Link to={`/edit/${activeCharacter.id}`} className="profile__edit-link">
+            Edit
+          </Link>
+          <Link to="/settings" className="profile__settings-link" aria-label="Settings">
+            ⚙️
+          </Link>
+        </div>
       </header>
 
       <Card className="profile__picture-card">
@@ -217,7 +222,7 @@ export default function Profile() {
       {!bio && !mottos.length && !favoriteSnack && !activeCharacter.hobbies.length && (
         <Card className="profile__placeholder">
           <h3>This persona is still blank</h3>
-          <p>Full editing arrives in Phase 3 — for now, a photo is all you can customize.</p>
+          <p>Tap Edit above to fill in who they are.</p>
         </Card>
       )}
     </div>

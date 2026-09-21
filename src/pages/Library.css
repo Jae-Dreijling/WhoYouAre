@@ -46,6 +46,30 @@
   font-size: 0.85rem;
 }
 
+.library__card--add {
+  border: 2px dashed var(--color-border);
+  justify-content: center;
+  min-height: 120px;
+}
+
+.library__card--add:hover {
+  border-color: var(--color-primary);
+}
+
+.library__add-icon {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .library__backup {
   display: flex;
   flex-direction: column;
